@@ -9,7 +9,7 @@ augroup HintHighlight
   autocmd WinEnter             * call hint#cleanup()
 augroup END
 
-function! s:map(keys)
+func! s:map(keys)
   let s:center = get(g:, 'hint_center_results', 0)
   let s:center_string = s:center ? 'zz' : ''
 
@@ -21,7 +21,7 @@ function! s:map(keys)
         \ 'zv' .
         \ s:center_string .
         \ ':call hint#add_highlights()<CR>'
-endfunction
+endf
 
 call s:map('#')  " <Plug>(hint-#)
 call s:map('*')  " <Plug>(hint-*)

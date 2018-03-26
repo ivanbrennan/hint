@@ -1,19 +1,19 @@
-function! hint#prepare_highlights() abort
+func! hint#prepare_highlights() abort
   call s:set_hlsearch()
   call s:next_cursormove_adds_hlmatch()
-endfunction
+endf
 
-function! hint#add_highlights() abort
+func! hint#add_highlights() abort
   call s:set_hlsearch()
   call s:add_hlmatch()
 endf
 
-function! hint#clear_highlight() abort
+func! hint#clear_highlight() abort
   call s:remove_cursormove_autocmd()
   call s:set_hlsearch(0)
-endfunction
+endf
 
-function! hint#is_highlighted() abort
+func! hint#is_highlighted() abort
   return exists('w:hint_hlmatch') || get(v:, 'hlsearch', 0)
 endf
 
@@ -22,18 +22,18 @@ endf
 " a `w:hint_hlmatch` variable, it means that `:nohiglight` was probably run
 " from another window and we should clean up the straggling match and the
 " window-local variable.
-function! hint#cleanup() abort
+func! hint#cleanup() abort
   if !exists('v:hlsearch') || !v:hlsearch
     call hint#clear_highlight()
   endif
-endfunction
+endf
 
-function! s:set_hlsearch(...)
+func! s:set_hlsearch(...)
   call s:delete_hlmatch()
   let &hlsearch = get(a:, 1, 1)
-endfunction
+endf
 
-function! s:delete_hlmatch()
+func! s:delete_hlmatch()
   if exists('w:hint_hlmatch')
     try
       call matchdelete(w:hint_hlmatch)
@@ -43,9 +43,9 @@ function! s:delete_hlmatch()
       unlet w:hint_hlmatch
     endtry
   endif
-endfunction
+endf
 
-function! s:add_hlmatch() abort
+func! s:add_hlmatch() abort
   call s:next_cursormove_clears_highlight()
 
   let highlight = get(g:, 'HintHighlightGroup', 'IncSearch')
@@ -53,24 +53,24 @@ function! s:add_hlmatch() abort
                             " \%# current cursor position
                             " @/ current search pattern
   let w:hint_hlmatch = matchadd(highlight, pattern)
-endfunction
+endf
 
-function! s:next_cursormove_clears_highlight()
+func! s:next_cursormove_clears_highlight()
   augroup HintCursorMoved
     autocmd!
     autocmd CursorMoved * call hint#clear_highlight()
   augroup END
-endfunction
+endf
 
-function! s:next_cursormove_adds_hlmatch()
+func! s:next_cursormove_adds_hlmatch()
   augroup HintCursorMoved
     autocmd!
     autocmd CursorMoved * call s:add_hlmatch()
   augroup END
-endfunction
+endf
 
-function! s:remove_cursormove_autocmd()
+func! s:remove_cursormove_autocmd()
   augroup HintCursorMoved
     autocmd!
   augroup END
-endfunction
+endf
