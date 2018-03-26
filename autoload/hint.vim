@@ -38,7 +38,7 @@ func! s:delete_hlmatch()
     try
       call matchdelete(w:hint_hlmatch)
     catch /\v<(E802|E803)>/
-      " https://github.com/wincent/hint/issues/1
+      " https://github.com/wincent/Loupe/issues/1
     finally
       unlet w:hint_hlmatch
     endtry
