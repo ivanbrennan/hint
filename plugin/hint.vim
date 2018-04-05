@@ -9,26 +9,25 @@ augroup HintHighlight
   autocmd WinEnter             * call hint#cleanup()
 augroup END
 
-func! s:map(keys)
-  let s:center = get(g:, 'hint_center_results', 0)
-  let s:center_string = s:center ? 'zz' : ''
+let s:display = get(g:, 'hint_center_results', 0) ? 'zvzz' : 'zv'
 
-  if !hasmapto('<Plug>(hint-' . a:keys . ')')
-    execute 'nmap <silent> ' . a:keys . ' <Plug>(hint-' . a:keys . ')'
+func! s:map(keys, plug)
+  if !empty(a:keys) && !hasmapto(a:plug)
+    exec 'nmap <silent>' a:keys a:plug
   endif
-  execute 'nnoremap <silent> <Plug>(hint-' . a:keys . ') ' .
+  exec 'nnoremap <silent>' a:plug
         \ a:keys .
-        \ 'zv' .
-        \ s:center_string .
+        \ s:display .
         \ ':call hint#add_highlights()<CR>'
 endf
 
-call s:map('#')  " <Plug>(hint-#)
-call s:map('*')  " <Plug>(hint-*)
-call s:map('N')  " <Plug>(hint-N)
-call s:map('g#') " <Plug>(hint-g#)
-call s:map('g*') " <Plug>(hint-g*)
-call s:map('n')  " <Plug>(hint-n)
+call s:map('#',  '<Plug>(hint-#)')
+call s:map('*',  '<Plug>(hint-*)')
+call s:map('N',  '<Plug>(hint-N)')
+call s:map('g#', '<Plug>(hint-g#)')
+call s:map('g*', '<Plug>(hint-g*)')
+call s:map('n',  '<Plug>(hint-n)')
+call s:map('',   '<Plug>(hint_highlight)')
 
 if !hasmapto('<Plug>(hint_toggle_highlight)') && maparg('<M-u>', 'n') ==# ''
   nmap <silent> <unique> <M-u> <Plug>(hint_toggle_highlight)
