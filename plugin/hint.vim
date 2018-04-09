@@ -16,9 +16,9 @@ func! s:map(keys, plug)
     exec 'nmap <silent>' a:keys a:plug
   endif
   exec 'nnoremap <silent>' a:plug
-        \ a:keys .
-        \ s:display .
-        \ ':call hint#add_highlights()<CR>'
+  \ a:keys .
+  \ s:display .
+  \ ':call hint#add_highlights()<CR>'
 endf
 
 call s:map('#',  '<Plug>(hint-#)')
@@ -38,8 +38,8 @@ if !hasmapto('<Plug>(hint_cword)') && maparg('<M-U>', 'n') ==# ''
 endif
 
 nnoremap <silent> <unique> <expr> <Plug>(hint_toggle_highlight)
-      \ hint#is_highlighted() ? ":call hint#clear_highlight()\<CR>"
-      \                       : ":call hint#add_highlights()\<CR>"
+\ hint#is_highlighted() ? ":call hint#clear_highlight()\<CR>"
+\                       : ":call hint#add_highlights()\<CR>"
 
 nnoremap <silent> <unique> <Plug>(hint_cword)
-      \ Mmz<C-O>*N`zzz<C-O>:call hint#add_highlights()<CR>
+\ Mmz<C-O>*N`zzz<C-O>:call hint#add_highlights()<CR>
