@@ -28,12 +28,12 @@ func! hint#cleanup() abort
   endif
 endf
 
-func! s:set_hlsearch(...)
+func! s:set_hlsearch(...) abort
   call s:delete_hlmatch()
   let &hlsearch = get(a:, 1, 1)
 endf
 
-func! s:delete_hlmatch()
+func! s:delete_hlmatch() abort
   if exists('w:hint_hlmatch')
     try
       call matchdelete(w:hint_hlmatch)
@@ -55,21 +55,21 @@ func! s:add_hlmatch() abort
   let w:hint_hlmatch = matchadd(highlight, pattern)
 endf
 
-func! s:next_cursormove_clears_highlight()
+func! s:next_cursormove_clears_highlight() abort
   augroup HintCursorMoved
     autocmd!
     autocmd CursorMoved * call hint#clear_highlight()
   augroup END
 endf
 
-func! s:next_cursormove_adds_hlmatch()
+func! s:next_cursormove_adds_hlmatch() abort
   augroup HintCursorMoved
     autocmd!
     autocmd CursorMoved * call s:add_hlmatch()
   augroup END
 endf
 
-func! s:remove_cursormove_autocmd()
+func! s:remove_cursormove_autocmd() abort
   augroup HintCursorMoved
     autocmd!
   augroup END

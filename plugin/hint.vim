@@ -11,7 +11,7 @@ augroup END
 
 let s:display = get(g:, 'hint_center_results', 0) ? 'zvzz' : 'zv'
 
-func! s:map(keys, plug)
+func! s:map(keys, plug) abort
   if !empty(a:keys) && !hasmapto(a:plug)
     exec 'nmap <silent>' a:keys a:plug
   endif
