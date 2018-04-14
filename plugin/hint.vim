@@ -18,14 +18,8 @@ func! s:map(keys, plug) abort
   exec 'nnoremap <silent>' a:plug
   \ a:keys .
   \ s:display .
-  \ ':call <SID>doautocmd()<CR>' .
+  \ ':silent doautocmd <nomodeline> User Hint<CR>' .
   \ ':call hint#add_highlights()<CR>'
-endf
-
-func! s:doautocmd() abort
-  if exists('#User#Hint')
-    doautocmd <nomodeline> User Hint
-  endif
 endf
 
 call s:map('#',  '<Plug>(hint-#)')
