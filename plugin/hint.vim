@@ -1,6 +1,9 @@
 if exists('g:loaded_hint') | finish | endif
 let g:loaded_hint = 1
 
+" still waiting for neovim 0.2.3 release
+if !exists('##CmdlineEnter') | finish | endif
+
 augroup HintHighlight
   autocmd!
   autocmd CmdlineEnter     [/\?] call hint#prepare_highlights()
