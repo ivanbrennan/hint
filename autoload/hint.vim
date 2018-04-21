@@ -47,12 +47,15 @@ endf
 
 func! s:add_hlmatch() abort
   call s:next_cursormove_clears_highlight()
+  let group = get(g:, 'HintHighlightGroup', 'IncSearch')
+  let w:hint_hlmatch = matchadd(group, s:pattern())
+endf
 
-  let highlight = get(g:, 'HintHighlightGroup', 'IncSearch')
-  let pattern='\c\%#' . @/  " \c case insensitive
-                            " \%# current cursor position
-                            " @/ current search pattern
-  let w:hint_hlmatch = matchadd(highlight, pattern)
+func! s:pattern()
+  " Prefix may contain, but not end with backslash
+  let match = substitute(@/, '\C\v^(.*[^\\])*(\\\\)*\\zs', '', '')
+  " \%# current cursor position
+  return '\c\%#' . match
 endf
 
 func! s:next_cursormove_clears_highlight() abort
