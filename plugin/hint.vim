@@ -7,7 +7,7 @@ if !exists('##CmdlineEnter') | finish | endif
 augroup HintHighlight
   autocmd!
   autocmd CmdlineEnter     [/\?] call hint#prepare_highlights()
-  autocmd CmdlineEnter   [:>=@-] call hint#clear_highlight()
+  autocmd CmdlineEnter    [>=@-] call hint#clear_highlight()
   autocmd InsertEnter,WinLeave * call hint#clear_highlight()
   autocmd WinEnter             * call hint#cleanup()
 augroup END
